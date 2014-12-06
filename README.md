@@ -31,7 +31,7 @@ Example Playbook
 
     - hosts: couchpotato_servers
       roles:
-        - role: cmacrae.sabnzbd
+        - role: cmacrae.couchpotato
 
 Or, passing parameter values:
 
