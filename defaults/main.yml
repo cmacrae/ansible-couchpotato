@@ -1,0 +1,22 @@
+---
+# CouchPotato user/group properties
+couchpotato_user_name: couchpotato
+couchpotato_group_name: couchpotato
+couchpotato_user_uid: 1000
+couchpotato_group_gid: 1000
+couchpotato_user_home: /opt/{{ couchpotato_user_name }}
+
+# CouchPotato paths
+couchpotato_conf_path: "{{ couchpotato_user_home }}/.couchpotato"
+# use this as the path in CouchPotato as the root for other directories (movie library, download directories)
+couchpotato_library_path: "{{ couchpotato_user_home}}/data" 
+couchpotato_binary_path: "{{ couchpotato_user_home }}/bin/CouchPotatoServer"
+
+# CouchPotato service properties
+couchpotato_pid_file: "{{ couchpotato_conf_path }}/couchpotato.pid"
+couchpotato_path_var: /opt/local/bin:/opt/local/sbin:/usr/bin:/bin
+couchpotato_service_args: >-
+  --data_dir {{ couchpotato_conf_path }} --config_file
+  {{ couchpotato_conf_path }}/settings.conf
+  --daemon --pid_file {{ couchpotato_pid_file }}
+
