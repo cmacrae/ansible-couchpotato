@@ -14,6 +14,11 @@
           createhome=yes
           state=present
 
+  - name: Ensure CouchPotato service user environment is set up
+    shell: cp /etc/skel/{.bash*,.login,.profile} {{ couchpotato_user_home }}/
+    args:
+      creates: "{{ couchpotato_user_home }}/.bashrc"
+          
   - name: Ensure locale is set to en_US.UTF-8 for CouchPotato service user
     lineinfile: dest={{ couchpotato_user_home }}/.bashrc
                 line="locale=en_US.UTF-8"
