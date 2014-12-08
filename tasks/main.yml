@@ -19,11 +19,6 @@
     args:
       creates: "{{ couchpotato_user_home }}/.bashrc"
           
-  - name: Ensure locale is set to en_US.UTF-8 for CouchPotato service user
-    lineinfile: dest={{ couchpotato_user_home }}/.bashrc
-                line="locale=en_US.UTF-8"
-                state=present
-
   - name: Ensure CouchPotato dependencies are installed
     pkgin: name={{ item }} state=present
     with_items:
