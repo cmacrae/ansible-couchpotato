@@ -9,9 +9,15 @@
     user: name={{ couchpotato_user_name }}
           uid={{ couchpotato_user_uid }}
           group={{ couchpotato_group_name }}
+          shell=/usr/bin/bash
           home={{ couchpotato_user_home }}
           createhome=yes
           state=present
+
+  - name: Ensure locale is set to en_US.UTF-8 for CouchPotato service user
+    lineinfile: dest={{ couchpotato_user_home }}/.bashrc
+                line="locale=en_US.UTF-8"
+                state=present
 
   - name: Ensure CouchPotato dependencies are installed
     pkgin: name={{ item }} state=present
