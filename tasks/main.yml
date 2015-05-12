@@ -47,7 +47,7 @@
   - name: Fetch CouchPotato from GitHub
     git: repo=git://github.com/RuudBurger/CouchPotatoServer
          dest={{ couchpotato_binary_path }}
-         update=no
+         update=no accept_hostkey=yes
 
   - name: Ensure tornado distributed with CouchPotato source is absent
     # Remove packaged tornado to fallback to py27-tornado installed by pkgin
