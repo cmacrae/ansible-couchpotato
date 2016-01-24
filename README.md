@@ -4,8 +4,7 @@ This role deploys [CouchPotato](https://couchpota.to), an automatic NZB & torren
 
 Requirements
 ------------
-This role has been written with [SmartOS](https://smartos.org) in mind, and is designed to be deployed to a [zone](https://wiki.smartos.org/display/DOC/Zones), for use as a server.
-However, if popular demand shows, I'll happily add in support for other operating systems.
+This role requires Ansible 2.0
 
 Role Variables
 --------------
@@ -14,17 +13,18 @@ The current version includes the following variables:
 
 | Name               | Default Value | Description                  |
 |--------------------|---------------|------------------------------|
-| couchpotato_user_name  | couchpotato | username to run the CouchPotato service |
-| couchpotato_group_name | couchpotato | groupname to run the CouchPotato service |
-| couchpotato_user_uid | 1000 | UID of the CouchPotato service user |
-| couchpotato_group_gid | 1000 | GID of the CouchPotato service group |
-| couchpotato_user_home | /opt/{{ couchpotato_user_name }} | home directory for the CouchPotato service user |
-| couchpotato_conf_path | {{ couchpotato_user_home }}/.couchpotato | configuration directory for the CouchPotato service |
-| couchpotato_library_path | {{ couchpotato_user_home }}/data | root library path, to be used for download directories, movie library etc. |
-| couchpotato_binary_path | {{ couchpotato_user_home }}/bin/CouchPotato | path where the CouchPotato source will reside |
-| couchpotato_pid_file | {{ couchpotato_conf_path }}/couchpotato.pid | pidfile for the CouchPotato service to write the pid to |
-| couchpotato_path_var | /opt/local/bin:/opt/local/sbin:/usr/bin:/bin | set $PATH for the CouchPotato service script |
-| couchpotato_service_args | --data_dir {{ couchpotato_conf_path }} --config_file<br> {{ couchpotato_conf_path }}/settings.conf<br> --daemon --pid_file {{ couchpotato_pid_file }} | arguments the CouchPotato service will use when starting |
+| `couchpotato_user_name`  | couchpotato | The user to run the CouchPotato service |
+| `couchpotato_group_name` | couchpotato | The primary group for `couchpotato_user_name` to run the CouchPotato service |
+| `couchpotato_user_uid` | 1005 | UID of the CouchPotato service user |
+| `couchpotato_group_gid` | 1005 | GID of the CouchPotato service group |
+| `couchpotato_user_home` | /var/lib/{{ couchpotato_user_name }} | home directory for the CouchPotato service user |
+| `couchpotato_library_path` | {{ couchpotato_user_home }}/data | root library path, to be used for download directories, movie library etc. |
+| `coucpotato_clone_uri` | 'git://github.com/RuudBurger/CouchPotatoServer' | The remote Git repo to clone CouchPotato from |
+| `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
+| `couchpotato_service_file` | | |
+| `    src`                  | couchpotato.service.j2 | The source template for the CouchPotato service manifest |
+| `    dest`                 | /etc/systemd/system/couchpotato.service | The destination to deploy the CouchPotato service manifest to |
+
 
 Example Playbook
 ----------------

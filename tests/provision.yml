@@ -1,0 +1,7 @@
+---
+
+  - name: Apply the cmacrae.couchpotato role to all tato_servers
+    hosts: tato_servers
+
+    roles:
+      - ../../cmacrae.couchpotato

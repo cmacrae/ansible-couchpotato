@@ -1,81 +1,61 @@
 ---
 
   - name: Ensure CouchPotato service group exists
-    group: name={{ couchpotato_group_name }}
-           gid={{ couchpotato_group_gid }}
-           state=present
+    group:
+      name: "{{ couchpotato_group_name }}"
+      gid: "{{ couchpotato_group_gid }}"
+      system: true
+      state: present
            
   - name: Ensure CouchPotato service user exists
-    user: name={{ couchpotato_user_name }}
-          uid={{ couchpotato_user_uid }}
-          group={{ couchpotato_group_name }}
-          shell=/usr/bin/bash
-          home={{ couchpotato_user_home }}
-          createhome=yes
-          state=present
+    user:
+      name: "{{ couchpotato_user_name }}"
+      uid: "{{ couchpotato_user_uid }}"
+      group: "{{ couchpotato_group_name }}"
+      home: "{{ couchpotato_user_home }}"
+      system: true
+      state: present
 
-  - name: Ensure CouchPotato service user environment is set up
-    shell: cp /etc/skel/{.bash*,.login,.profile} {{ couchpotato_user_home }}/
-    args:
-      creates: "{{ couchpotato_user_home }}/.bashrc"
-          
   - name: Ensure CouchPotato dependencies are installed
-    pkgin: name={{ item }} state=present
-    with_items:
-      - git-base
-      - py27-sqlite3
-      - py27-tornado
-
-  - name: Ensure Couchpotato binary directory exists
-    file: dest={{ couchpotato_user_home }}/bin
-          owner={{ couchpotato_user_name }}
-          group={{ couchpotato_group_name }}
-          recurse=yes state=directory
+    package: name={{ item }} state=present
+    with_items: "couchpotato_dependencies"
 
   - name: Ensure CouchPotato library directory exists
-    file: dest={{ couchpotato_library_path }}
-          owner={{ couchpotato_user_name }}
-          group={{ couchpotato_group_name }}
-          state=directory
+    file:
+      dest: "{{ couchpotato_library_path }}"
+      owner: "{{ couchpotato_user_name }}"
+      group: "{{ couchpotato_group_name }}"
+      state: directory
 
   - name: Ensure CouchPotato config directory exists
-    file: dest={{ couchpotato_conf_path }}
-          owner={{ couchpotato_user_name }}
-          group={{ couchpotato_group_name }}
-          recurse=yes state=directory
+    file:
+      dest: "{{ couchpotato_conf_path }}"
+      owner: "{{ couchpotato_user_name }}"
+      group: "{{ couchpotato_group_name }}"
+      recurse: true
+      state: directory
 
-  - name: Fetch CouchPotato from GitHub
-    git: repo=git://github.com/RuudBurger/CouchPotatoServer
-         dest={{ couchpotato_binary_path }}
-         update=no accept_hostkey=yes
+  - name: Fetch CouchPotato source code
+    git:
+      repo: "{{ coucpotato_clone_uri }}"
+      dest: "{{ couchpotato_user_home }}/src"
+      update: false
+      accept_hostkey: true
+    become: true
+    become_user: "{{ couchpotato_user_name }}"
 
-  - name: Ensure tornado distributed with CouchPotato source is absent
-    # Remove packaged tornado to fallback to py27-tornado installed by pkgin
-    file: dest={{ couchpotato_binary_path }}/libs/tornado
-          state=absent
-
-  - name: Ensure CouchPotato source is owned by service user
-    file: dest={{ couchpotato_binary_path }}
-          owner={{ couchpotato_user_name }}
-          group={{ couchpotato_group_name }}
-          recurse=yes state=directory
-
-  - name: Deploy CouchPotato service script
-    template: dest=/opt/local/lib/svc/method/couchpotato
-              src=couchpotato.smartos_service.j2
-              owner=root group=root mode=755
-    notify: restart couchpotato
-              
   - name: Deploy CouchPotato service manifest
-    template: dest=/opt/local/lib/svc/manifest/couchpotato.xml
-              src=couchpotato.smartos_smf_manifest.xml.j2
-              owner=root group=root mode=644
-    notify: import couchpotato service
-              
-  - name: Initial import of CouchPotato service
-    command: /usr/sbin/svccfg import /opt/local/lib/svc/manifest/couchpotato.xml
-    args:
-      creates: "/var/svc/log/application-couchpotato:default.log"
+    template:
+      src: "{{ couchpotato_service_file.src }}"
+      dest: "{{ couchpotato_service_file.dest }}"
+      owner: root
+      group: root
+      mode: 0600
+    notify:
+      - Reload CouchPotato service config
+      - Restart CouchPotato service
+
+  - meta: flush_handlers
 
   - name: Ensure the CouchPotato service is running and enabled on boot
     service: name=couchpotato state=started enabled=yes

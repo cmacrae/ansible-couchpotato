@@ -1,7 +1,7 @@
 ---
 
-- name: restart couchpotato
-  service: name=couchpotato state=restarted
+  - name: Restart CouchPotato service
+    service: name=couchpotato state=restarted
 
-- name: import couchpotato service
-  command: /usr/sbin/svccfg import /opt/local/lib/svc/manifest/couchpotato.xml
+  - name: Reload CouchPotato service config
+    command: "{{ couchpotato_service_reload_command }}"
