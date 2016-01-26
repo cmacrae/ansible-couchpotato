@@ -17,6 +17,7 @@ Role Variables
 All variables have sensible defaults, which can be found in `defaults/main.yml`.
 The current version includes the following variables:
 
+### Defaults
 | Name               | Default Value | Description                  |
 |--------------------|---------------|------------------------------|
 | `couchpotato_user_name`  | couchpotato | The user to run the CouchPotato service |
@@ -27,10 +28,19 @@ The current version includes the following variables:
 | `couchpotato_library_path` | {{ couchpotato_user_home }}/data | Root library path, to be used for download directories, movie library etc. |
 | `coucpotato_clone_uri` | 'git://github.com/RuudBurger/CouchPotatoServer' | The remote Git repo to clone CouchPotato from |
 | `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
+|                            | - python-lxml | |
+|                            | - unrar-free | |
 | `couchpotato_service_file` | | |
 | `    src`                  | couchpotato.service.j2 | The source template for the CouchPotato service manifest |
 | `    dest`                 | /etc/systemd/system/couchpotato.service | The destination to deploy the CouchPotato service manifest to |
 | `couchpotato_service_reload_command` | `systemctl daemon-reload` | The command to use when reloading the CouchPotato service configuration |
+
+### CentOS 7
+| Name               | Default Value | Description                  |
+|--------------------|---------------|------------------------------|
+| `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
+|                            | - python-lxml | |
+|                            | - unar | |
 
 
 Example Playbook

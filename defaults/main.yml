@@ -13,3 +13,5 @@ couchpotato_service_file:
   dest: /etc/systemd/system/couchpotato.service
 couchpotato_dependencies:
   - git-core
+  - python-lxml
+  - unrar-free

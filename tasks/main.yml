@@ -1,5 +1,10 @@
 ---
 
+  - include_vars: "{{ item }}"
+    with_first_found:
+      - "{{ ansible_distribution }}.yml"
+      - main.yml
+
   - name: Ensure CouchPotato service group exists
     group:
       name: "{{ couchpotato_group_name }}"

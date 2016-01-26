@@ -1,0 +1,5 @@
+---
+couchpotato_dependencies:
+  - git-core
+  - python-lxml
+  - unar
