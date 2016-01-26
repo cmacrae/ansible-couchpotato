@@ -24,12 +24,13 @@ The current version includes the following variables:
 | `couchpotato_user_uid` | 1005 | UID of the CouchPotato service user |
 | `couchpotato_group_gid` | 1005 | GID of the CouchPotato service group |
 | `couchpotato_user_home` | /var/lib/{{ couchpotato_user_name }} | home directory for the CouchPotato service user |
-| `couchpotato_library_path` | {{ couchpotato_user_home }}/data | root library path, to be used for download directories, movie library etc. |
+| `couchpotato_library_path` | {{ couchpotato_user_home }}/data | Root library path, to be used for download directories, movie library etc. |
 | `coucpotato_clone_uri` | 'git://github.com/RuudBurger/CouchPotatoServer' | The remote Git repo to clone CouchPotato from |
 | `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
 | `couchpotato_service_file` | | |
 | `    src`                  | couchpotato.service.j2 | The source template for the CouchPotato service manifest |
 | `    dest`                 | /etc/systemd/system/couchpotato.service | The destination to deploy the CouchPotato service manifest to |
+| `couchpotato_service_reload_command` | `systemctl daemon-reload` | The command to use when reloading the CouchPotato service configuration |
 
 
 Example Playbook
