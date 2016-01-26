@@ -11,7 +11,3 @@ couchpotato_service_reload_command: systemctl daemon-reload
 couchpotato_service_file:
   src: couchpotato.service.j2
   dest: /etc/systemd/system/couchpotato.service
-couchpotato_dependencies:
-  - git-core
-  - python-lxml
-  - unrar-free
