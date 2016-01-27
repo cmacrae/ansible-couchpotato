@@ -2,4 +2,5 @@
 couchpotato_dependencies:
   - git-core
   - python-lxml
+  - python-openssl
   - unrar-free

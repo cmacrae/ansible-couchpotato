@@ -29,6 +29,7 @@ The current version includes the following variables:
 | `coucpotato_clone_uri` | 'git://github.com/RuudBurger/CouchPotatoServer' | The remote Git repo to clone CouchPotato from |
 | `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
 |                            | - python-lxml | |
+|                            | - python-openssl | |
 |                            | - unrar-free | |
 | `couchpotato_service_file` | | |
 | `    src`                  | couchpotato.service.j2 | The source template for the CouchPotato service manifest |
@@ -40,6 +41,7 @@ The current version includes the following variables:
 |--------------------|---------------|------------------------------|
 | `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
 |                            | - python-lxml | |
+|                            | - pyOpenSSL | |
 |                            | - unar | |
 
 
