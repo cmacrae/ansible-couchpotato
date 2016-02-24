@@ -4,7 +4,7 @@ couchpotato_group_name: couchpotato
 couchpotato_user_uid: 1005
 couchpotato_group_gid: 1005
 couchpotato_user_home: /var/lib/{{ couchpotato_user_name }}
-coucpotato_clone_uri: 'git://github.com/RuudBurger/CouchPotatoServer'
+couchpotato_clone_uri: 'git://github.com/RuudBurger/CouchPotatoServer'
 couchpotato_conf_path: "{{ couchpotato_user_home }}/.couchpotato"
 couchpotato_library_path: "{{ couchpotato_user_home}}/data" # Parent path for movie library, download directories, etc.
 couchpotato_service_reload_command: systemctl daemon-reload

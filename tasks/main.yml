@@ -39,7 +39,7 @@
 
   - name: Fetch CouchPotato source code
     git:
-      repo: "{{ coucpotato_clone_uri }}"
+      repo: "{{ couchpotato_clone_uri }}"
       dest: "{{ couchpotato_user_home }}/src"
       update: false
       accept_hostkey: true

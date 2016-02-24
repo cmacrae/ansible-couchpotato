@@ -26,7 +26,7 @@ The current version includes the following variables:
 | `couchpotato_group_gid` | 1005 | GID of the CouchPotato service group |
 | `couchpotato_user_home` | /var/lib/{{ couchpotato_user_name }} | home directory for the CouchPotato service user |
 | `couchpotato_library_path` | {{ couchpotato_user_home }}/data | Root library path, to be used for download directories, movie library etc. |
-| `coucpotato_clone_uri` | 'git://github.com/RuudBurger/CouchPotatoServer' | The remote Git repo to clone CouchPotato from |
+| `couchpotato_clone_uri` | 'git://github.com/RuudBurger/CouchPotatoServer' | The remote Git repo to clone CouchPotato from |
 | `couchpotato_dependencies` | - git-core | A list of dependency packages for CouchPotato |
 |                            | - python-lxml | |
 |                            | - python-openssl | |
